@@ -1,0 +1,31 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: turnosapp_postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: turnosapp
+      POSTGRES_USER: turnosapp
+      POSTGRES_PASSWORD: secret
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - turnosapp
+
+  redis:
+    image: redis:7-alpine
+    container_name: turnosapp_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - turnosapp
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  turnosapp:
