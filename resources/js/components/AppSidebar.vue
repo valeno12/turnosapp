@@ -26,7 +26,7 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Planes de Suscripción',
-        href: admin.subscriptionPlans.index(),
+        href: admin.plans.index(),
         icon: Folder,
     },
     {

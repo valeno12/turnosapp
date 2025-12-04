@@ -14,25 +14,12 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
-/**
- * Dashboard General (redirige según rol)
- */
-Route::get('/dashboard', function () {
-    $user = Auth::user();
-    
-    // Redirigir según rol
-    if ($user->role === 'admin') {
-        return redirect()->route('admin.dashboard');
-    }
-    
-    if ($user->role === 'instructor') {
-        return redirect()->route('instructor.dashboard');
-    }
-    
-    // Student por defecto
-    return redirect()->route('student.dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', function () {
+        return inertia('Dashboard'); // Mismo componente para todos
+    })->name('dashboard');
+});
 /**
  * Módulos
  */
