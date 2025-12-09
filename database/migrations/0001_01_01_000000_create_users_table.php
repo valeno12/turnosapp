@@ -15,16 +15,16 @@ return new class extends Migration
             $table->id();
             $table->foreignId('tenant_id')->constrained()->onDelete('cascade');
             $table->string('name');
-            $table->string('email')->nullable();
+            $table->string('email');
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password')->nullable();
-            $table->string('role')->default('student');
+            $table->string('password');
+            $table->enum('role', ['admin', 'instructor'])->default('instructor');
             $table->rememberToken();
             $table->timestamps();
-            $table->softDeletes(); // ← AGREGAR ACÁ
+            $table->softDeletes();
             
             $table->index('tenant_id');
-            $table->index(['tenant_id', 'email']);
+            $table->unique(['tenant_id', 'email']); // ← UNIQUE, no solo index
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

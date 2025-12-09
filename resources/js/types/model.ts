@@ -35,3 +35,21 @@ export interface SubscriptionPlan {
     created_at: string;
     updated_at: string;
 }
+
+export interface User {
+    id: number;
+    tenant_id: number;
+    name: string;
+    email: string | null;
+    role: 'admin' | 'instructor';
+    permissions?: Permission[];
+    created_at: string;
+    updated_at: string;
+}
+
+export interface Permission {
+    id: number;
+    name: string;
+    description: string;
+    group: string;
+}

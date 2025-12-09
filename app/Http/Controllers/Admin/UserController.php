@@ -65,24 +65,18 @@ class UserController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'nullable|email|unique:users,email,NULL,id,tenant_id,' . $request->user()->tenant_id,
+            'email' => 'required|email|unique:users,email,NULL,id,tenant_id,' . $request->user()->tenant_id,
             'password' => ['required', Password::defaults()],
-            'role' => 'required|in:student,instructor',
-            'health_notes' => 'nullable|string',
+            'role' => 'required|in:admin,instructor',
             'permission_ids' => 'array',
             'permission_ids.*' => 'exists:permissions,id',
-        ], [
-            'email.unique' => 'Ya existe un usuario con este email en tu estudio.',
-            'role.in' => 'El rol debe ser alumno o instructor.',
         ]);
 
-        // Crear usuario
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
             'role' => $validated['role'],
-            'health_notes' => $validated['health_notes'] ?? null,
         ]);
 
         // Asignar permisos si no es admin
@@ -142,15 +136,11 @@ class UserController extends Controller
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'nullable|email|unique:users,email,' . $user->id . ',id,tenant_id,' . $request->user()->tenant_id,
+            'email' => 'required|email|unique:users,email,' . $user->id . ',id,tenant_id,' . $request->user()->tenant_id,
             'password' => ['nullable', Password::defaults()],
-            'role' => 'required|in:student,instructor',
-            'health_notes' => 'nullable|string',
+            'role' => 'required|in:admin,instructor',
             'permission_ids' => 'array',
             'permission_ids.*' => 'exists:permissions,id',
-        ], [
-            'email.unique' => 'Ya existe otro usuario con este email en tu estudio.',
-            'role.in' => 'El rol debe ser alumno o instructor.',
         ]);
 
         $oldData = [
@@ -160,12 +150,10 @@ class UserController extends Controller
             'permissions' => $user->permissions->pluck('name')->toArray(),
         ];
 
-        // Actualizar datos básicos
         $user->update([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'role' => $validated['role'],
-            'health_notes' => $validated['health_notes'] ?? null,
         ]);
 
         // Actualizar password solo si se envió
