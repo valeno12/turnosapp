@@ -16,10 +16,12 @@
                 @change-page="goToPage"
             >
                 <template #actions>
-                    <Button @click="handleCreate">
-                        <Plus class="mr-2 h-4 w-4" />
-                        Nuevo Plan
-                    </Button>
+                    <Can permission="manage_subscription_plans">
+                        <Button @click="handleCreate">
+                            <Plus class="mr-2 h-4 w-4" />
+                            Nuevo Plan
+                        </Button>
+                    </Can>
                 </template>
 
                 <template #cell-classes_per_week="{ item }">
@@ -84,25 +86,27 @@
                 </template>
 
                 <template #cell-acciones="{ item }">
-                    <div class="flex items-center justify-end gap-2">
-                        <Button
-                            variant="outline"
-                            size="sm"
-                            @click="handleEdit(item.id)"
-                            title="Editar"
-                        >
-                            <Pencil class="h-4 w-4" />
-                        </Button>
+                    <Can permission="manage_subscription_plans">
+                        <div class="flex items-center justify-end gap-2">
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                @click="handleEdit(item.id)"
+                                title="Editar"
+                            >
+                                <Pencil class="h-4 w-4" />
+                            </Button>
 
-                        <Button
-                            variant="destructive"
-                            size="sm"
-                            @click="confirmDelete(item)"
-                            title="Eliminar"
-                        >
-                            <Trash2 class="h-4 w-4" />
-                        </Button>
-                    </div>
+                            <Button
+                                variant="destructive"
+                                size="sm"
+                                @click="confirmDelete(item)"
+                                title="Eliminar"
+                            >
+                                <Trash2 class="h-4 w-4" />
+                            </Button>
+                        </div>
+                    </Can>
                 </template>
             </DataTable>
         </div>

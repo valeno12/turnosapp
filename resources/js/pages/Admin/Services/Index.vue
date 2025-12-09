@@ -16,10 +16,12 @@
                 @change-page="goToPage"
             >
                 <template #actions>
-                    <Button @click="handleCreate">
-                        <Plus class="mr-2 h-4 w-4" />
-                        Nuevo Servicio
-                    </Button>
+                    <Can permission="manage_services">
+                        <Button @click="handleCreate">
+                            <Plus class="mr-2 h-4 w-4" />
+                            Nuevo Servicio
+                        </Button>
+                    </Can>
                 </template>
 
                 <template #cell-color="{ item }">
@@ -48,25 +50,27 @@
                 </template>
 
                 <template #cell-acciones="{ item }">
-                    <div class="flex items-center justify-end gap-2">
-                        <Button
-                            variant="outline"
-                            size="sm"
-                            @click="handleEdit(item.id)"
-                            title="Editar"
-                        >
-                            <Pencil class="h-4 w-4" />
-                        </Button>
+                    <Can permission="manage_services">
+                        <div class="flex items-center justify-end gap-2">
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                @click="handleEdit(item.id)"
+                                title="Editar"
+                            >
+                                <Pencil class="h-4 w-4" />
+                            </Button>
 
-                        <Button
-                            variant="destructive"
-                            size="sm"
-                            @click="confirmDelete(item)"
-                            title="Eliminar"
-                        >
-                            <Trash2 class="h-4 w-4" />
-                        </Button>
-                    </div>
+                            <Button
+                                variant="destructive"
+                                size="sm"
+                                @click="confirmDelete(item)"
+                                title="Eliminar"
+                            >
+                                <Trash2 class="h-4 w-4" />
+                            </Button>
+                        </div>
+                    </Can>
                 </template>
             </DataTable>
         </div>
@@ -97,6 +101,7 @@
 </template>
 
 <script setup lang="ts">
+import Can from '@/components/Can.vue';
 import type { TableColumn } from '@/components/shared/DataTable.vue';
 import DataTable from '@/components/shared/DataTable.vue';
 import {
