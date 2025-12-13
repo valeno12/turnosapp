@@ -83,10 +83,13 @@ class SettingsController extends Controller
 
         // Handle logo upload
         if ($request->hasFile('logo')) {
+            // Eliminar logo anterior del tenant
             if ($tenant->logo_url) {
                 Storage::disk('public')->delete($tenant->logo_url);
             }
-            $path = $request->file('logo')->store('logos', 'public');
+            
+            // Guardar en carpeta del tenant
+            $path = $request->file('logo')->store("tenants/{$tenant->id}/logos", 'public');
             $validated['logo_url'] = $path;
             unset($validated['logo']);
         }

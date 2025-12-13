@@ -7,7 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { VueDatePicker } from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
 import { es } from 'date-fns/locale';
-import { inject } from 'vue';
+import { computed, inject } from 'vue';
 interface Props {
     isEditing?: boolean;
 }
@@ -15,6 +15,15 @@ interface Props {
 defineProps<Props>();
 
 const form = inject<any>('studentForm');
+const isDark = computed(() => {
+    const appearance = localStorage.getItem('appearance') || 'system';
+
+    if (appearance === 'dark') return true;
+    if (appearance === 'light') return false;
+
+    // system
+    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+});
 </script>
 
 <template>
@@ -51,6 +60,7 @@ const form = inject<any>('studentForm');
                 auto-apply
                 :year-range="[1920, new Date().getFullYear()]"
                 :locale="es"
+                :dark="isDark"
             />
         </FormField>
     </div>
