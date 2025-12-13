@@ -40,7 +40,8 @@ interface Props {
 }
 
 const props = defineProps<Props>();
-
+console.log('🔍 User recibido:', props.user);
+console.log('🔍 Permissions del user:', props.user?.permissions);
 const form = useForm({
     name: props.user?.name || '',
     email: props.user?.email || '',
@@ -48,6 +49,7 @@ const form = useForm({
     role: props.user?.role || 'instructor',
     permission_ids: props.user?.permissions?.map((p) => p.id) || [],
 });
+console.log('📦 Form permission_ids inicial:', form.permission_ids);
 
 provide('userForm', form);
 

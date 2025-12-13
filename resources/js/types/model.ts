@@ -53,3 +53,32 @@ export interface Permission {
     description: string;
     group: string;
 }
+export interface Tenant {
+    id: number;
+    name: string;
+    subdomain: string;
+    domain: string | null;
+    logo_url: string | null;
+    primary_color: string | null;
+    cancellation_hours: number | null;
+    schedule_change_policy: string | null;
+    schedule_change_cutoff_days: number | null;
+    pricing_rules: any;
+    is_active: boolean;
+    created_at: string;
+    updated_at: string;
+}
+export interface Student {
+    id: number;
+    tenant_id: number;
+    name: string;
+    email: string | null;
+    phone: string | null;
+    birth_date: string | null;
+    health_notes: string | null;
+    emergency_contact: string | null;
+    emergency_phone: string | null;
+    is_active: boolean;
+    created_at: string;
+    updated_at: string;
+}

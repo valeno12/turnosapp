@@ -16,7 +16,7 @@
                 @change-page="goToPage"
             >
                 <template #actions>
-                    <Can permission="manage_users">
+                    <Can permission="access_users">
                         <Button @click="handleCreate">
                             <Plus class="mr-2 h-4 w-4" />
                             Nuevo Usuario

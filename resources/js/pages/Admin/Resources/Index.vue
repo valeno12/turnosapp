@@ -17,12 +17,10 @@
             >
                 <!-- Botón de crear en el header -->
                 <template #actions>
-                    <Can permission="manage_resources">
-                        <Button @click="handleCreate">
-                            <Plus class="mr-2 h-4 w-4" />
-                            Nuevo Recurso
-                        </Button>
-                    </Can>
+                    <Button @click="handleCreate">
+                        <Plus class="mr-2 h-4 w-4" />
+                        Nuevo Recurso
+                    </Button>
                 </template>
 
                 <!-- Columna de capacidad personalizada -->
@@ -57,27 +55,25 @@
 
                 <!-- Columna de acciones personalizada -->
                 <template #cell-acciones="{ item }">
-                    <Can permission="manage_resources">
-                        <div class="flex items-center justify-end gap-2">
-                            <Button
-                                variant="outline"
-                                size="sm"
-                                @click="handleEdit(item.id)"
-                                title="Editar"
-                            >
-                                <Pencil class="h-4 w-4" />
-                            </Button>
+                    <div class="flex items-center justify-end gap-2">
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            @click="handleEdit(item.id)"
+                            title="Editar"
+                        >
+                            <Pencil class="h-4 w-4" />
+                        </Button>
 
-                            <Button
-                                variant="destructive"
-                                size="sm"
-                                @click="confirmDelete(item)"
-                                title="Eliminar"
-                            >
-                                <Trash2 class="h-4 w-4" />
-                            </Button>
-                        </div>
-                    </Can>
+                        <Button
+                            variant="destructive"
+                            size="sm"
+                            @click="confirmDelete(item)"
+                            title="Eliminar"
+                        >
+                            <Trash2 class="h-4 w-4" />
+                        </Button>
+                    </div>
                 </template>
             </DataTable>
         </div>
@@ -110,7 +106,6 @@
 </template>
 
 <script setup lang="ts">
-import Can from '@/components/Can.vue';
 import type { TableColumn } from '@/components/shared/DataTable.vue';
 import DataTable from '@/components/shared/DataTable.vue';
 import {

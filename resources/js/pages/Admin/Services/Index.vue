@@ -16,12 +16,10 @@
                 @change-page="goToPage"
             >
                 <template #actions>
-                    <Can permission="manage_services">
-                        <Button @click="handleCreate">
-                            <Plus class="mr-2 h-4 w-4" />
-                            Nuevo Servicio
-                        </Button>
-                    </Can>
+                    <Button @click="handleCreate">
+                        <Plus class="mr-2 h-4 w-4" />
+                        Nuevo Servicio
+                    </Button>
                 </template>
 
                 <template #cell-color="{ item }">

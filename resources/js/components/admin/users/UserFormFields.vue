@@ -97,15 +97,13 @@
                         :key="permission.id"
                         class="flex items-center space-x-2"
                     >
-                        <Checkbox
+                        <input
+                            type="checkbox"
                             :id="`permission-${permission.id}`"
-                            :checked="
-                                form.permission_ids.includes(permission.id)
-                            "
-                            @update:checked="
-                                togglePermission(permission.id, $event)
-                            "
+                            v-model="form.permission_ids"
+                            :value="permission.id"
                             :disabled="form.processing"
+                            class="peer h-4 w-4 shrink-0 rounded-sm border border-primary shadow-sm focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
                         />
                         <Label
                             :for="`permission-${permission.id}`"
@@ -128,7 +126,6 @@
 </template>
 <script setup lang="ts">
 import FormField from '@/components/shared/FormField.vue';
-import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
@@ -144,21 +141,6 @@ interface Props {
 defineProps<Props>();
 
 const form = inject<any>('userForm');
-
-const togglePermission = (permissionId: number, checked: boolean | string) => {
-    const isChecked = checked === true || checked === 'true';
-
-    if (isChecked) {
-        if (!form.permission_ids.includes(permissionId)) {
-            form.permission_ids.push(permissionId);
-        }
-    } else {
-        const index = form.permission_ids.indexOf(permissionId);
-        if (index > -1) {
-            form.permission_ids.splice(index, 1);
-        }
-    }
-};
 
 const groupLabels: Record<string, string> = {
     resources: 'Recursos',

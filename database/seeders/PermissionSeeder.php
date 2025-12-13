@@ -17,98 +17,74 @@ class PermissionSeeder extends Seeder
         $permissions = [
             // RECURSOS
             [
-                'name' => 'view_resources',
-                'description' => 'Ver listado de recursos',
-                'group' => 'resources',
-            ],
-            [
-                'name' => 'manage_resources',
-                'description' => 'Gestionar recursos (crear, editar, eliminar)',
+                'name' => 'access_resources',
+                'description' => 'Acceso a recursos (ver y gestionar)',
                 'group' => 'resources',
             ],
 
             // SERVICIOS
             [
-                'name' => 'view_services',
-                'description' => 'Ver listado de servicios',
-                'group' => 'services',
-            ],
-            [
-                'name' => 'manage_services',
-                'description' => 'Gestionar servicios (crear, editar, eliminar)',
+                'name' => 'access_services',
+                'description' => 'Acceso a servicios (ver y gestionar)',
                 'group' => 'services',
             ],
 
             // PLANES
             [
-                'name' => 'view_plans',
-                'description' => 'Ver listado de planes de suscripción',
-                'group' => 'plans',
-            ],
-            [
-                'name' => 'manage_plans',
-                'description' => 'Gestionar planes (crear, editar, eliminar)',
+                'name' => 'access_plans',
+                'description' => 'Acceso a planes (ver y gestionar)',
                 'group' => 'plans',
             ],
 
             // USUARIOS
             [
-                'name' => 'view_users',
-                'description' => 'Ver listado de usuarios',
-                'group' => 'users',
-            ],
-            [
-                'name' => 'manage_users',
-                'description' => 'Gestionar usuarios (crear, editar, eliminar)',
+                'name' => 'access_users',
+                'description' => 'Acceso a usuarios (ver, crear, editar)',
                 'group' => 'users',
             ],
             [
                 'name' => 'manage_permissions',
-                'description' => 'Gestionar permisos de otros usuarios',
+                'description' => 'Gestionar permisos de usuarios',
                 'group' => 'users',
             ],
 
             // HORARIOS
             [
-                'name' => 'view_schedule',
-                'description' => 'Ver grilla de horarios',
-                'group' => 'schedule',
-            ],
-            [
-                'name' => 'manage_schedule',
-                'description' => 'Gestionar horarios (crear, editar, eliminar bloques)',
+                'name' => 'access_schedule',
+                'description' => 'Acceso a horarios (ver y gestionar)',
                 'group' => 'schedule',
             ],
 
             // RESERVAS
             [
-                'name' => 'view_bookings',
-                'description' => 'Ver reservas de clases',
-                'group' => 'bookings',
-            ],
-            [
-                'name' => 'manage_bookings',
-                'description' => 'Gestionar reservas (crear, cancelar, marcar asistencia)',
+                'name' => 'access_bookings',
+                'description' => 'Acceso a reservas (ver y gestionar)',
                 'group' => 'bookings',
             ],
 
             // REPORTES
             [
-                'name' => 'view_reports',
-                'description' => 'Ver reportes y estadísticas',
+                'name' => 'access_reports',
+                'description' => 'Acceso a reportes básicos',
                 'group' => 'reports',
             ],
             [
-                'name' => 'view_financial_reports',
-                'description' => 'Ver reportes financieros',
+                'name' => 'access_financial',
+                'description' => 'Acceso a reportes financieros',
                 'group' => 'reports',
             ],
 
             // CONFIGURACIÓN
             [
-                'name' => 'manage_tenant_settings',
-                'description' => 'Gestionar configuración del estudio',
+                'name' => 'access_settings',
+                'description' => 'Acceso a configuración del estudio',
                 'group' => 'settings',
+            ],
+            // ALUMNOS
+            [
+                'name' => 'access_students',
+                'description' => 'Acceso a alumnos (ver, crear, editar)',
+                'group' => 'students',
             ],
         ];
 
