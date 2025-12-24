@@ -22,6 +22,9 @@ class Tenant extends Model
         'schedule_change_cutoff_days',
         'pricing_rules',
         'is_active',
+        'schedule_start_time',
+        'schedule_end_time',
+        'working_days',
     ];
 
     protected $casts = [
@@ -29,6 +32,9 @@ class Tenant extends Model
         'is_active' => 'boolean',
         'cancellation_hours' => 'integer',
         'schedule_change_cutoff_days' => 'integer',
+        'schedule_start_time' => 'datetime:H:i',
+        'schedule_end_time' => 'datetime:H:i',
+        'working_days' => 'array',
     ];
 
     public function users(): HasMany

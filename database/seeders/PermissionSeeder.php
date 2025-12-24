@@ -86,6 +86,11 @@ class PermissionSeeder extends Seeder
                 'description' => 'Acceso a alumnos (ver, crear, editar)',
                 'group' => 'students',
             ],
+            [
+                'name' => 'access_schedules',
+                'description' => 'Acceso a horarios (ver y gestionar)',
+                'group' => 'schedules',
+            ],
         ];
 
         foreach ($permissions as $permission) {

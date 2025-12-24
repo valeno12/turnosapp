@@ -52,19 +52,23 @@
 
         <!-- Diálogo del cropper -->
         <Dialog v-model:open="showCropper">
-            <DialogContent class="max-w-4xl">
+            <DialogContent
+                class="flex max-h-[90vh] max-w-3xl flex-col overflow-hidden"
+            >
                 <DialogHeader>
                     <DialogTitle>Recortar Logo</DialogTitle>
                 </DialogHeader>
 
-                <div class="my-4">
+                <!-- Cropper con altura responsiva -->
+                <div class="my-4 min-h-0 flex-1">
                     <Cropper
                         ref="cropperRef"
                         :src="imageSource"
                         :stencil-props="{
                             aspectRatio: 1,
                         }"
-                        class="h-[500px] w-full"
+                        class="h-full w-full"
+                        :style="{ maxHeight: '400px' }"
                     />
                 </div>
 
@@ -92,7 +96,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from '@/components/ui/dialog';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { Cropper } from 'vue-advanced-cropper';
 import 'vue-advanced-cropper/dist/style.css';
 
@@ -101,10 +105,11 @@ interface Props {
     error?: string;
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
 
 const emit = defineEmits<{
-    (e: 'update', file: File): void;
+    (e: 'update', file: File | null): void;
+    (e: 'clear-preview'): void;
 }>();
 
 const showCropper = ref(false);
@@ -112,6 +117,20 @@ const imageSource = ref('');
 const cropperRef = ref();
 const fileInputRef = ref<HTMLInputElement>();
 const previewUrl = ref<string>('');
+
+// Limpiar preview cuando el logo externo cambia (después de guardar)
+watch(
+    () => props.currentLogo,
+    (newLogo, oldLogo) => {
+        if (newLogo !== oldLogo && previewUrl.value) {
+            // Se guardó exitosamente, limpiar preview
+            if (previewUrl.value) {
+                URL.revokeObjectURL(previewUrl.value);
+            }
+            previewUrl.value = '';
+        }
+    },
+);
 
 const triggerFileInput = () => {
     fileInputRef.value?.click();
@@ -122,12 +141,23 @@ const handleFileSelect = (event: Event) => {
     const file = target.files?.[0];
 
     if (file) {
+        // Validar tamaño (2MB)
+        if (file.size > 2 * 1024 * 1024) {
+            alert('El archivo no puede superar 2MB');
+            return;
+        }
+
         const reader = new FileReader();
         reader.onload = (e) => {
             imageSource.value = e.target?.result as string;
             showCropper.value = true;
         };
         reader.readAsDataURL(file);
+    }
+
+    // Limpiar input para permitir subir el mismo archivo
+    if (fileInputRef.value) {
+        fileInputRef.value.value = '';
     }
 };
 
@@ -142,6 +172,9 @@ const handleCrop = async () => {
             const file = new File([blob], 'logo.png', { type: 'image/png' });
 
             // Crear preview URL
+            if (previewUrl.value) {
+                URL.revokeObjectURL(previewUrl.value);
+            }
             previewUrl.value = URL.createObjectURL(blob);
 
             emit('update', file);
@@ -160,6 +193,6 @@ const clearPreview = () => {
         URL.revokeObjectURL(previewUrl.value);
     }
     previewUrl.value = '';
-    emit('update', null as any);
+    emit('update', null);
 };
 </script>

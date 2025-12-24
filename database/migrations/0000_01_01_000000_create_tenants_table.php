@@ -24,10 +24,14 @@ return new class extends Migration
             
             $table->integer('cancellation_hours')->default(6); // Tiempo límite para cancelar
             $table->enum('schedule_change_policy', ['end_of_month', 'anytime'])->default('end_of_month');
-            $table->integer('schedule_change_cutoff_days')->default(7); // Días antes de fin de mes
+            $table->integer('schedule_change_cutoff_days')->default(7)->nullable(); // Días antes de fin de mes
             
             // Reglas de Precio (JSON porque es una lista compleja)
             $table->json('pricing_rules')->nullable();
+            
+            $table->time('schedule_start_time')->default('07:00');
+            $table->time('schedule_end_time')->default('21:00');
+            $table->json('working_days')->default('[1,2,3,4,5]');
             
             // Estado
             $table->boolean('is_active')->default(true);

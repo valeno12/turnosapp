@@ -88,46 +88,23 @@
                                     id="primary_color"
                                     label="Color Principal"
                                     hint="Este color se usará en toda la aplicación"
+                                    :error="form.errors.primary_color"
                                 >
-                                    <div class="space-y-3">
-                                        <div class="flex items-center gap-4">
-                                            <div class="relative">
-                                                <Input
-                                                    id="primary_color"
-                                                    v-model="form.primary_color"
-                                                    type="color"
-                                                    :disabled="form.processing"
-                                                    class="h-14 w-14 cursor-pointer rounded-lg border-2"
-                                                />
-                                            </div>
-                                            <Input
-                                                v-model="form.primary_color"
-                                                type="text"
-                                                placeholder="#6366f1"
-                                                :disabled="form.processing"
-                                                class="flex-1 font-mono"
-                                            />
-                                        </div>
-                                        <!-- Preview -->
-                                        <div
-                                            class="flex items-center gap-2 rounded-lg border p-3"
-                                            :style="{
-                                                backgroundColor:
-                                                    form.primary_color + '10',
-                                            }"
-                                        >
-                                            <div
-                                                class="h-8 w-8 rounded"
-                                                :style="{
-                                                    backgroundColor:
-                                                        form.primary_color,
-                                                }"
-                                            ></div>
-                                            <span
-                                                class="text-sm text-muted-foreground"
-                                                >Vista previa del color</span
-                                            >
-                                        </div>
+                                    <div class="flex items-center gap-3">
+                                        <Input
+                                            id="primary_color"
+                                            v-model="form.primary_color"
+                                            type="color"
+                                            class="h-12 w-20 cursor-pointer"
+                                            :disabled="form.processing"
+                                        />
+                                        <Input
+                                            v-model="form.primary_color"
+                                            type="text"
+                                            placeholder="#6366f1"
+                                            class="font-mono"
+                                            :disabled="form.processing"
+                                        />
                                     </div>
                                 </FormField>
                             </CardContent>
@@ -145,23 +122,21 @@
                                         />
                                     </div>
                                     <div>
-                                        <CardTitle
-                                            >Políticas de Clases</CardTitle
-                                        >
+                                        <CardTitle>Políticas</CardTitle>
                                         <CardDescription
-                                            >Reglas para tus
-                                            alumnos</CardDescription
+                                            >Reglas de cancelación y cambios de
+                                            horario</CardDescription
                                         >
                                     </div>
                                 </div>
                             </CardHeader>
-                            <CardContent class="space-y-8">
+                            <CardContent class="space-y-6">
                                 <!-- Cancelación -->
                                 <FormField
                                     id="cancellation_hours"
                                     label="Cancelación de Clases"
+                                    hint="Con cuántas horas de anticipación pueden cancelar"
                                     :error="form.errors.cancellation_hours"
-                                    hint="Tiempo límite para cancelar sin perder el crédito"
                                 >
                                     <div class="flex items-center gap-3">
                                         <Input
@@ -177,7 +152,7 @@
                                         />
                                         <span
                                             class="text-sm font-medium text-muted-foreground"
-                                            >horas de anticipación</span
+                                            >horas antes</span
                                         >
                                     </div>
                                 </FormField>
@@ -185,83 +160,54 @@
                                 <Separator />
 
                                 <!-- Cambio de Horario -->
-                                <FormField
-                                    id="schedule_change_policy"
-                                    label="Cambios de Horario Fijo"
-                                    :error="
-                                        form.errors.schedule_change_cutoff_days
-                                    "
-                                    hint="Define cuándo pueden cambiar su horario mensual"
-                                >
+                                <div class="space-y-4">
+                                    <Label class="text-base font-medium"
+                                        >Cambios de Horario Mensual</Label
+                                    >
                                     <RadioGroup
                                         v-model="form.schedule_change_policy"
                                         :disabled="form.processing"
-                                        class="space-y-3"
                                     >
                                         <div
-                                            class="relative flex cursor-pointer items-start space-x-3 rounded-lg border-2 p-4 transition-colors hover:bg-accent"
-                                            :class="
-                                                form.schedule_change_policy ===
-                                                'end_of_month'
-                                                    ? 'border-primary bg-primary/5'
-                                                    : 'border-border'
-                                            "
+                                            class="flex items-center space-x-2"
                                         >
                                             <RadioGroupItem
-                                                id="end_of_month"
-                                                value="end_of_month"
-                                                class="mt-1"
-                                            />
-                                            <div class="flex-1">
-                                                <Label
-                                                    for="end_of_month"
-                                                    class="cursor-pointer font-semibold"
-                                                >
-                                                    Solo a fin de mes
-                                                </Label>
-                                                <p
-                                                    class="mt-1 text-sm text-muted-foreground"
-                                                >
-                                                    Pueden solicitar cambios
-                                                    únicamente antes de que
-                                                    termine el mes
-                                                </p>
-                                            </div>
-                                        </div>
-
-                                        <div
-                                            class="relative flex cursor-pointer items-start space-x-3 rounded-lg border-2 p-4 transition-colors hover:bg-accent"
-                                            :class="
-                                                form.schedule_change_policy ===
-                                                'anytime'
-                                                    ? 'border-primary bg-primary/5'
-                                                    : 'border-border'
-                                            "
-                                        >
-                                            <RadioGroupItem
-                                                id="anytime"
                                                 value="anytime"
-                                                class="mt-1"
+                                                id="anytime"
                                             />
-                                            <div class="flex-1">
-                                                <Label
-                                                    for="anytime"
-                                                    class="cursor-pointer font-semibold"
-                                                >
-                                                    En cualquier momento
-                                                </Label>
-                                                <p
-                                                    class="mt-1 text-sm text-muted-foreground"
-                                                >
-                                                    Tienen libertad total para
-                                                    cambiar cuando lo necesiten
-                                                </p>
-                                            </div>
+                                            <Label
+                                                for="anytime"
+                                                class="cursor-pointer font-normal"
+                                            >
+                                                Cualquier momento
+                                            </Label>
+                                        </div>
+                                        <div
+                                            class="flex items-center space-x-2"
+                                        >
+                                            <RadioGroupItem
+                                                value="end_of_month"
+                                                id="end_of_month"
+                                            />
+                                            <Label
+                                                for="end_of_month"
+                                                class="cursor-pointer font-normal"
+                                            >
+                                                Solo fin de mes
+                                            </Label>
                                         </div>
                                     </RadioGroup>
-                                </FormField>
+                                    <p
+                                        v-if="
+                                            form.errors.schedule_change_policy
+                                        "
+                                        class="text-sm text-destructive"
+                                    >
+                                        {{ form.errors.schedule_change_policy }}
+                                    </p>
+                                </div>
 
-                                <!-- Días de anticipación -->
+                                <!-- Días de anticipación (solo si es end_of_month) -->
                                 <FormField
                                     v-if="
                                         form.schedule_change_policy ===
@@ -270,6 +216,9 @@
                                     id="schedule_change_cutoff_days"
                                     label="Días de Anticipación"
                                     hint="Con cuántos días de anticipación deben avisar"
+                                    :error="
+                                        form.errors.schedule_change_cutoff_days
+                                    "
                                 >
                                     <div class="flex items-center gap-3">
                                         <Input
@@ -291,6 +240,7 @@
                                 </FormField>
                             </CardContent>
                         </Card>
+
                         <!-- Pricing Rules -->
                         <Card class="lg:col-span-2">
                             <CardHeader>
@@ -381,6 +331,7 @@ import {
     Save,
     Settings,
 } from 'lucide-vue-next';
+import { toast } from 'vue-sonner';
 
 interface Props {
     tenant: Tenant;
@@ -402,7 +353,7 @@ const form = useForm({
     ],
 });
 
-const handleLogoUpdate = (file: File) => {
+const handleLogoUpdate = (file: File | null) => {
     form.logo = file;
 };
 
@@ -410,6 +361,16 @@ const submit = () => {
     form.post('/admin/settings', {
         forceFormData: true,
         preserveScroll: true,
+        onSuccess: () => {
+            toast.success('¡Configuración guardada!', {
+                description: 'Los cambios se han aplicado exitosamente.',
+            });
+        },
+        onError: () => {
+            toast.error('Error al guardar', {
+                description: 'Por favor, revisa los campos marcados en rojo.',
+            });
+        },
     });
 };
 

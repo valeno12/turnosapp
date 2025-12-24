@@ -193,6 +193,8 @@ const getBadgeVariant = (percentage: string) => {
                 <!-- Recargo -->
                 <div>
                     <Label class="mb-2 text-sm font-medium">Recargo</Label>
+                    <!-- Espaciador para alinear con los labels "Día" -->
+                    <div class="h-[21px]"></div>
                     <div class="flex items-center gap-2">
                         <Input
                             :id="`multiplier_${index}`"
@@ -211,19 +213,16 @@ const getBadgeVariant = (percentage: string) => {
                             class="text-lg font-semibold text-muted-foreground"
                             >%</span
                         >
+                        <Badge
+                            v-if="Number(getPercentage(rule.multiplier)) > 0"
+                            class="ml-auto"
+                            :variant="
+                                getBadgeVariant(getPercentage(rule.multiplier))
+                            "
+                        >
+                            +{{ getPercentage(rule.multiplier) }}%
+                        </Badge>
                     </div>
-                    <Badge
-                        class="mt-2 w-full justify-center"
-                        :variant="
-                            getBadgeVariant(getPercentage(rule.multiplier))
-                        "
-                    >
-                        {{
-                            Number(getPercentage(rule.multiplier)) === 0
-                                ? 'Sin recargo'
-                                : `+${getPercentage(rule.multiplier)}% de mora`
-                        }}
-                    </Badge>
                 </div>
             </div>
 

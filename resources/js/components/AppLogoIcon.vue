@@ -1,5 +1,7 @@
 <script setup lang="ts">
+import { usePage } from '@inertiajs/vue3';
 import type { HTMLAttributes } from 'vue';
+import { computed } from 'vue';
 
 defineOptions({
     inheritAttrs: false,
@@ -10,10 +12,30 @@ interface Props {
 }
 
 defineProps<Props>();
+
+const page = usePage();
+
+// Obtener el logo del tenant
+const tenantLogo = computed(() => {
+    const tenant = page.props.tenant as any;
+    return tenant?.config?.logo_url || tenant?.logo_url;
+});
 </script>
 
 <template>
+    <!-- Si hay logo cargado, mostrarlo -->
+    <img
+        v-if="tenantLogo"
+        :src="`/storage/${tenantLogo}`"
+        alt="Logo"
+        :class="className"
+        v-bind="$attrs"
+        class="object-contain"
+    />
+
+    <!-- SVG por defecto si no hay logo -->
     <svg
+        v-else
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 40 42"
         :class="className"
